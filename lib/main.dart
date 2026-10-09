@@ -1,133 +1,64 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-void main() {
-  runApp(const MiPerfilApp());
-}
+void main() => runApp(const MiApp());
 
-class MiPerfilApp extends StatelessWidget {
-  const MiPerfilApp({super.key});
+class MiApp extends StatelessWidget {
+  const MiApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Mi Perfil Académico Interactivo',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const PerfilAcademicoScreen(),
+      title: 'Ficha de tema',
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF6750A4), // TODO 1: hex de Theme Builder
+        ),
+        textTheme: GoogleFonts.poppinsTextTheme(
+          const TextTheme(),
+        ), // TODO 2: fuente (poppins, lato)
+      ),
+      home: const PantallaTema(),
     );
   }
 }
 
-class PerfilAcademicoScreen extends StatefulWidget {
-  const PerfilAcademicoScreen({super.key});
-
-  @override
-  State<PerfilAcademicoScreen> createState() => _PerfilAcademicoScreenState();
-}
-
-class _PerfilAcademicoScreenState extends State<PerfilAcademicoScreen> {
-  final String nombreCompleto = "Alfredo Guzman Turpo";
-  final int numeroPersonal = 34;
-  final double promedioPonderado = 16.85;
-  final bool estaMatriculado = true;
-
-  late int logrosAcademicos;
-
-  @override
-  void initState() {
-    super.initState();
-    logrosAcademicos = numeroPersonal;
-  }
-
-  void _incrementarLogro() {
-    setState(() {
-      logrosAcademicos++;
-    });
-  }
+class PantallaTema extends StatelessWidget {
+  const PantallaTema({super.key});
 
   @override
   Widget build(BuildContext context) {
-    String parImpar = (numeroPersonal % 2 == 0)
-        ? "Tu número personal es par"
-        : "Tu número personal es impar";
-
-    String rangoNp = (numeroPersonal > 50)
-        ? "Número personal alto"
-        : "Número personal bajo";
-
-    List<int> multiplos = [];
-    for (int i = 1; i <= 5; i++) {
-      multiplos.add(numeroPersonal * i);
-    }
+    final colores = Theme.of(context).colorScheme;
+    final textos = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: AppBar(title: Text(nombreCompleto)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+      appBar: AppBar(
+        title: const Text('Mi tema Material 3'),
+        backgroundColor: colores.primaryContainer, // TODO 3: token "contenedor primario"
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "1. Datos Personales y Variables (Sesión 02)",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
+            Text('Vilca Market', style: textos.headlineMedium),
             const SizedBox(height: 8),
-            Text(
-              "• Nombre: $nombreCompleto",
-              style: const TextStyle(fontSize: 15),
-            ),
-            Text(
-              "• Número Personal (NP): $numeroPersonal",
-              style: const TextStyle(fontSize: 15),
-            ),
-            Text(
-              "• Promedio Ponderado: $promedioPonderado",
-              style: const TextStyle(fontSize: 15),
-            ),
-            Text(
-              "• ¿Matriculado?: ${estaMatriculado ? 'Sí' : 'No'}",
-              style: const TextStyle(fontSize: 15),
-            ),
-            const Divider(height: 30),
-
-            const Text(
-              "2. Clasificación con Estructura if-else (Sesión 02)",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Text("• $parImpar", style: const TextStyle(fontSize: 15)),
-            Text("• $rangoNp", style: const TextStyle(fontSize: 15)),
-            const Divider(height: 30),
-
-            const Text(
-              "3. Múltiplos generados con Bucle for (Sesión 02)",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            ...multiplos.map(
-              (m) =>
-                  Text("• Múltiplo: $m", style: const TextStyle(fontSize: 15)),
-            ),
-            const Divider(height: 30),
-
-            const Text(
-              "4. Interactividad con StatefulWidget y Hot Reload (Sesión 01 y 03)",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              "Logros académicos: $logrosAcademicos",
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
+            Text('Diseño coherente con Material 3', style: textos.bodyLarge),
+            const SizedBox(height: 16),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.store), // TODO 4: ícono de tienda
+                title: const Text('Catálogo de productos'),
+                subtitle: const Text('Toca para explorar'),
               ),
             ),
-            const SizedBox(height: 12),
-            ElevatedButton.icon(
-              onPressed: _incrementarLogro,
-              icon: const Icon(Icons.add),
-              label: const Text("Sumar logro"),
+            const SizedBox(height: 16),
+            FilledButton.icon(
+              onPressed: () {},
+              icon: const Icon(Icons.shopping_cart),
+              label: const Text('Ir al carrito'),
             ),
           ],
         ),
