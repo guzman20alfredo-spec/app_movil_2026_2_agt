@@ -1,64 +1,52 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-void main() => runApp(const MiApp());
+void main() => runApp(const MaterialApp(home: CatalogoCorregido()));
 
-class MiApp extends StatelessWidget {
-  const MiApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Ficha de tema',
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6750A4), // TODO 1: hex de Theme Builder
-        ),
-        textTheme: GoogleFonts.poppinsTextTheme(
-          const TextTheme(),
-        ), // TODO 2: fuente (poppins, lato)
-      ),
-      home: const PantallaTema(),
-    );
-  }
-}
-
-class PantallaTema extends StatelessWidget {
-  const PantallaTema({super.key});
+class CatalogoCorregido extends StatelessWidget {
+  const CatalogoCorregido({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final colores = Theme.of(context).colorScheme;
-    final textos = Theme.of(context).textTheme;
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mi tema Material 3'),
-        backgroundColor: colores.primaryContainer, // TODO 3: token "contenedor primario"
-      ),
+      appBar: AppBar(title: const Text('Vilca Market')),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            Text('Vilca Market', style: textos.headlineMedium),
-            const SizedBox(height: 8),
-            Text('Diseño coherente con Material 3', style: textos.bodyLarge),
-            const SizedBox(height: 16),
-            Card(
-              child: ListTile(
-                leading: const Icon(Icons.store), // TODO 4: ícono de tienda
-                title: const Text('Catálogo de productos'),
-                subtitle: const Text('Toca para explorar'),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Arroz 1 kg',
+                      style: TextStyle(
+                        fontSize: 16, // Corregido: tamaño >= 14 sp
+                        color: Colors
+                            .black87, // Corregido: contraste adecuado >= 4.5:1
+                      ),
+                    ),
+                    const Text(
+                      'S/4.80',
+                      style: TextStyle(
+                        fontSize: 16, // Corregido: tamaño >= 14 sp
+                        color: Colors
+                            .black87, // Corregido: contraste adecuado >= 4.5:1
+                      ),
+                    ),
+                    IconButton(
+                      tooltip: 'Agregar al carrito', // Corregido: Nombre accesible para TalkBack
+                      icon: const Icon(
+                        Icons.add,
+                        size: 24,
+                      ), // Corregido: Tamaño de objetivo táctil adecuado
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            FilledButton.icon(
-              onPressed: () {},
-              icon: const Icon(Icons.shopping_cart),
-              label: const Text('Ir al carrito'),
             ),
           ],
         ),
