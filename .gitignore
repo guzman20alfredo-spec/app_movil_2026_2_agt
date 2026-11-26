@@ -49,3 +49,4 @@ app.*.map.json
 .env.*
 *.keystore
 *.jks
+env.json
